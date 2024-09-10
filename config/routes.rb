@@ -13,6 +13,6 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :questions do
-    resources :answers, shallow: true
+    resources :answers, shallow: true, only: %i[ new create ]
   end
 end
