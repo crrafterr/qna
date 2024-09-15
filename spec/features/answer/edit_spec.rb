@@ -37,9 +37,10 @@ feature 'User can edit his answer', %q(
       visit question_path(question)
       click_on 'Edit answer'
 
-      within '.answers' do
+      within '.answer' do
         fill_in 'Your answer', with: ''
         click_on 'Save'
+
 
         expect(page).to have_content answer.body
         expect(page).to have_selector('textarea', id: 'answer_body')

@@ -22,14 +22,18 @@ class AnswersController < ApplicationController
   def update
     if current_user.author?(answer)
       answer.update(answer_params)
-      @question = answer.question
+      @question = @answer.question
     else
       redirect_to answer.question
     end
   end
 
   def best
-    answer.best! if current_user
+    if current_user
+      answer.best!
+    else
+      redirect_to answer.question
+    end
   end
 
   private

@@ -4,7 +4,7 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
-  default_scope -> { order(best: :desc) }
+  scope :sort_by_best, -> { order(best: :desc) }
   scope :best, -> { where(best: true) }
 
   def best!
