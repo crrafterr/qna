@@ -65,21 +65,4 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
-
-  describe 'DELETE #delete_attachment' do
-    before do
-      attach_file_to(answer)
-    end
-
-    it 'delete answer attachment' do
-      expect do
-        delete :delete_attachment, params: { id: answer, file_id: answer.files.first.id }, format: :js
-      end.to change(ActiveStorage::Attachment, :count).by(-1)
-    end
-
-    it 'render answer update' do
-      delete :delete_attachment, params: { id: answer.id, file_id: answer.files.first.id }, format: :js
-      expect(response).to render_template :delete_attachment
-    end
-  end
 end

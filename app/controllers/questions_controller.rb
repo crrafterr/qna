@@ -40,15 +40,6 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def delete_attachment
-    if current_user.author?(attachment.record)
-      @question = attachment.record
-      attachment.purge
-    else
-      redirect_to @question
-    end
-  end
-
   private
 
   def question
@@ -59,13 +50,5 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body, files: [])
-  end
-
-  def attachment_params
-    params.permit(:id, :file_id)
-  end
-
-  def attachment
-    @attachment = ActiveStorage::Attachment.find(attachment_params[:file_id])
   end
 end

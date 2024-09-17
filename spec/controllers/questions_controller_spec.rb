@@ -109,22 +109,4 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to redirect_to questions_path
     end
   end
-
-  describe 'DELETE #delete_attachment' do
-    before do
-      login(user)
-      attach_file_to(question)
-    end
-
-    it 'delete question attachment' do
-      expect do
-        delete :delete_attachment, params: { id: question, file_id: question.files.first.id }, format: :js
-      end.to change(ActiveStorage::Attachment, :count).by(-1)
-    end
-
-    it 'render question update' do
-      delete :delete_attachment, params: { id: question.id, file_id: question.files.first.id }, format: :js
-      expect(response).to render_template :delete_attachment
-    end
-  end
 end
