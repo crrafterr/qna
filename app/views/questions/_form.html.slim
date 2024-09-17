@@ -12,4 +12,7 @@
     = f.label :body, 'Your question'
     = f.text_area :body
   p
+    = f.label :files, 'Question files'
+    = f.file_field :files, multiple: true
+  p
     = f.submit 'Save'

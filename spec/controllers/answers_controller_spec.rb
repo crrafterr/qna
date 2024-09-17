@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
+  let(:answer) { create(:answer, question: question, user: user) }
+
   before { login(user) }
 
   describe 'POST #create' do
@@ -61,6 +63,23 @@ RSpec.describe AnswersController, type: :controller do
         patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid_answer) }, format: :js
         expect(response).to render_template :update
       end
+    end
+  end
+
+  describe 'DELETE #delete_attachment' do
+    before do
+      attach_file_to(answer)
+    end
+
+    it 'delete answer attachment' do
+      expect do
+        delete :delete_attachment, params: { id: answer, file_id: answer.files.first.id }, format: :js
+      end.to change(ActiveStorage::Attachment, :count).by(-1)
+    end
+
+    it 'render answer update' do
+      delete :delete_attachment, params: { id: answer.id, file_id: answer.files.first.id }, format: :js
+      expect(response).to render_template :delete_attachment
     end
   end
 end
