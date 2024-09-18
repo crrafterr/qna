@@ -32,3 +32,11 @@ local:
 #   service: Mirror
 #   primary: local
 #   mirrors: [ amazon, google, microsoft ]
+minio:
+  service: S3
+  bucket: rails-app
+  endpoint: http://minio-test-api.test.local
+  access_key_id: testuser
+  secret_access_key: testuser
+  region: us-east-1
+  force_path_style: true
