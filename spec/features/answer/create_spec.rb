@@ -1,10 +1,6 @@
 require 'rails_helper'
 
-feature 'User can create answer', %q(
-  "As an authenticated user
-  being on the question page
-  I'd like to create the answer to the question"
-) do
+feature 'User can create answer' do
   given(:user) { create(:user) }
   given!(:question) { create(:question, user: user) }
 
@@ -38,7 +34,7 @@ feature 'User can create answer', %q(
     end
   end
 
-  scenario 'Unauthenticated user tries to create a answer' do
+  scenario 'Non-logged in user can not create a answer' do
     visit question_path(question)
     click_on 'Answer'
 

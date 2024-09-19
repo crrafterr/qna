@@ -40,11 +40,11 @@ RSpec.describe AttachmentsController, type: :controller do
     context 'user' do
       before { login(user) }
 
-      it 'delete the question attachment' do
+      it 'can not delete the question attachment' do
         expect { delete :destroy, params: { id: question.files.first }, format: :js }.to_not change(ActiveStorage::Attachment, :count)
       end
 
-      it 'delete the answer attachment' do
+      it 'can not delete the answer attachment' do
         expect { delete :destroy, params: { id: answer.files.first }, format: :js }.to_not change(ActiveStorage::Attachment, :count)
       end
     end

@@ -1,7 +1,19 @@
-.answer class="answer-#{answer.id}"
-  p = answer.body
+- if answer.persisted?
+  .answer class="answer-#{answer.id}"
+    p = answer.body
 
-  - if answer.persisted?
+    - if answer.files.attached?
+      .attachment-files
+        p Files:
+        ul
+          = render 'attachments/attachment', resource: answer
+
+    - if answer.links.count > 0
+      .links
+        p Links:
+        ul
+          = render  answer.links, resource: answer
+ 
     - if current_user&.author?(answer)
         = link_to "Delete answer", 
                   answer_path(answer),
@@ -20,30 +32,25 @@
                 method: :patch,
                 data: { answer_id: answer.id }
     
-    .attachment-files
-      - if answer.files.attached?
-        - answer.files.each do |file|
-          .attachment-file class="attachment-file-#{file.id}"
-            p = link_to file.filename.to_s, url_for(file)
-            - if current_user&.author?(answer)
-              = link_to 'Delete attachment',
-                    attachment_path(file),
-                    class: 'delete-attachment-file-link',
-                    remote: true,
-                    method: :delete
-
-  = form_with model: answer,
-              class: 'hidden',
-              html: { id: "edit-answer-#{answer.id}" },
-              data: {turbo:false}, local: false do |f|
+    = form_with model: answer,
+                class: 'hidden',
+                html: { id: "edit-answer-#{answer.id}" },
+                data: {turbo:false}, local: false do |f|
   
-    .answer-edit-errors
-      = render 'shared/errors', resource: answer
-    p
-      = f.label :body, 'Your answer'
-      = f.text_area :body
-    p
-      = f.label :files, 'Answers files'
-      = f.file_field :files, multiple: true
-    p
-      = f.submit 'Save'
+      .answer-edit-errors
+        = render 'shared/errors', resource: answer
+      
+      p
+        = f.label :body, 'Your answer'
+        = f.text_area :body
+      p
+        = f.label :files, 'Answers files'
+        = f.file_field :files, multiple: true
+      
+      p Links:
+      p
+        = f.fields_for :links do |l|
+        .links
+          = link_to_add_association 'add link', f, :links
+      p
+        = f.submit 'Save'

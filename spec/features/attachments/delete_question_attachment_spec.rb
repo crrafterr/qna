@@ -5,11 +5,11 @@ feature 'User can remove his question attachments' do
   given(:user) { create(:user) }
   given(:question) { create(:question, user: author) }
 
-  describe 'Authenticated user', js: true do
-    before do
-      attach_file_to(question)
-    end
+  before do
+    attach_file_to(question)
+  end
 
+  describe 'Authenticated user', js: true do
     scenario 'author of the question delete the attachment' do
       sign_in(author)
       visit question_path(question)
@@ -23,7 +23,7 @@ feature 'User can remove his question attachments' do
       end
     end
 
-    scenario 'Not author of the question delete the attachment' do
+    scenario 'user of the question can not delete the attachment' do
       sign_in(user)
       visit question_path(question)
 
@@ -31,13 +31,13 @@ feature 'User can remove his question attachments' do
         expect(page).to_not have_link 'Delete attachment'
       end
     end
+  end
 
-    scenario 'not authenticated user delete question attachment' do
-      visit question_path(question)
+  scenario 'Non-logged in user delete question attachment' do
+    visit question_path(question)
 
-      within ".attachment-file-#{question.files.first.id}" do
-        expect(page).to_not have_link 'Delete attachment'
-      end
+    within ".attachment-file-#{question.files.first.id}" do
+      expect(page).to_not have_link 'Delete attachment'
     end
   end
 end

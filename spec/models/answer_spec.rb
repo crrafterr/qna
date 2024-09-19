@@ -2,10 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
   it { should belong_to(:question) }
+  it { should belong_to(:user) }
+  it { should have_many(:links).dependent(:destroy) }
+
+  it { should have_many_attached(:files) }
 
   it { should validate_presence_of :body }
 
-  it { should have_many_attached(:files) }
+  it { should accept_nested_attributes_for :links }
 
   describe '#best!' do
     let(:user) { create(:user) }
@@ -14,7 +18,7 @@ RSpec.describe Answer, type: :model do
     let(:second_answer) { create(:answer, question: question, user: user) }
 
     context 'when there are not best answers' do
-      it 'Set best' do
+      it 'set best' do
         first_answer.best!
 
         expect(first_answer.best).to be true
