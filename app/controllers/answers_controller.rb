@@ -31,6 +31,7 @@ class AnswersController < ApplicationController
   def best
     if current_user
       answer.best!
+      answer.user.add_badge!(answer.question.badge)
     else
       redirect_to answer.question
     end
@@ -49,6 +50,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, files: [])
+    params.require(:answer).permit(:body, files: [], links_attributes: [ :name, :url ])
   end
 end

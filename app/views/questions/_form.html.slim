@@ -6,7 +6,7 @@
     = render 'shared/errors', resource: question
     
   p
-    = f.label :title , 'Your title'
+    = f.label :title, 'Your title'
     = f.text_field :title
   p 
     = f.label :body, 'Your question'
@@ -14,5 +14,10 @@
   p
     = f.label :files, 'Question files'
     = f.file_field :files, multiple: true
+  p Links:
+  p
+    = f.fields_for :links do |l|
+    .links
+      = link_to_add_association 'add link', f, :links
   p
     = f.submit 'Save'

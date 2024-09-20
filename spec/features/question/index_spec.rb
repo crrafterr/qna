@@ -9,7 +9,7 @@ feature 'All users can view questions' do
       sign_in(user)
     end
 
-    scenario 'Can view questions' do
+    scenario 'can view questions' do
       visit questions_path
 
       questions.each { |question| expect(page).to have_content question.title }
