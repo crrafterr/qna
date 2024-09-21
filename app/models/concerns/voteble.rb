@@ -24,6 +24,9 @@ module Voteble
   private
 
   def vote(user, vote)
-    votes.create!(user: user, vote: vote) unless user.voted?(self) || user.author?(self)
+    return if user.voted?(self)
+    return if user.author?(self)
+
+    votes.create!(user: user, vote: vote)
   end
 end

@@ -1,18 +1,27 @@
 require 'rails_helper'
 
 shared_examples_for Voteble do
+  let(:model) { described_class }
+  let(:author) { create(:user) }
+  let(:first_user) { create(:user) }
+  let(:second_user) { create(:user) }
+
+  let(:voteble) do
+    voted(model, author)
+  end
+
   describe 'Associations' do
     it { should have_many(:votes).dependent(:destroy) }
   end
 
   describe '#vote_up' do
-    it 'user can vote up' do
+    it 'votes up' do
       voteble.vote_up(first_user)
 
       expect(voteble.total_votes).to eq 1
     end
 
-    it 'user can vote up once' do
+    it 'vote up once' do
       voteble.vote_up(first_user)
       voteble.vote_up(first_user)
 
@@ -21,13 +30,13 @@ shared_examples_for Voteble do
   end
 
   describe '#vote_down' do
-    it 'user can vote down' do
+    it 'votes down' do
       voteble.vote_down(first_user)
 
       expect(voteble.total_votes).to eq (-1)
     end
 
-    it 'user can vote down once' do
+    it 'vote down once' do
       voteble.vote_down(first_user)
       voteble.vote_down(first_user)
 
@@ -45,7 +54,7 @@ shared_examples_for Voteble do
   end
 
   describe '#recall' do
-    it 'user can recall vote' do
+    it 'recall vote' do
       voteble.vote_up(first_user)
       voteble.recall(first_user)
 

@@ -15,12 +15,5 @@ RSpec.describe Question, type: :model do
   it { should accept_nested_attributes_for :links }
   it { should accept_nested_attributes_for :badge }
 
-  describe "Voteble" do
-    it_behaves_like Voteble do
-      let(:author) { create(:user) }
-      let(:first_user) { create(:user) }
-      let(:second_user) { create(:user) }
-      let(:voteble) { create(:question, user: author) }
-    end
-  end
+  it_behaves_like Voteble
 end

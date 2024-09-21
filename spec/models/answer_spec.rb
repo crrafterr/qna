@@ -40,13 +40,5 @@ RSpec.describe Answer, type: :model do
     end
   end
 
-  describe "Voteble" do
-    it_behaves_like Voteble do
-      let(:author) { create(:user) }
-      let(:first_user) { create(:user) }
-      let(:second_user) { create(:user) }
-      let(:question) { create(:question, user: author) }
-      let(:voteble) { create(:answer, question: question, user: author) }
-    end
-  end
+  it_behaves_like Voteble
 end
