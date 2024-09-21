@@ -40,6 +40,7 @@ RSpec.configure do |config|
   config.include FeatureHelpers, type: :feature
   config.include WaitAjaxRequest, type: :feature
   config.include AttachFileHelpers, type: :feature
+  config.include VoteHelpers, type: :model
   Capybara.javascript_driver = :selenium_chrome_headless
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
