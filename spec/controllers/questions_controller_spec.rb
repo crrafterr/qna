@@ -44,7 +44,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'POST #create' do
     before { login(user) }
-    
+
     context 'with valid attributes' do
       it 'save a new question in the database' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
@@ -70,7 +70,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
     before { login(user) }
-    
+
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do
         patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
@@ -118,6 +118,13 @@ RSpec.describe QuestionsController, type: :controller do
     it 'redirects to index' do
       delete :destroy, params: { id: question }
       expect(response).to redirect_to questions_path
+    end
+  end
+
+  describe 'Voted' do
+    it_behaves_like Voted do
+      let(:author) { create(:user) }
+      let(:voteble) { create(:question, user: author) }
     end
   end
 end

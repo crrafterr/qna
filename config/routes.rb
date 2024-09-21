@@ -15,8 +15,15 @@ Rails.application.routes.draw do
   # root "posts#index"
   root to: "questions#index"
 
-  resources :questions do
-    resources :answers, shallow: true, only: %i[ new create destroy update] do
+  concern :voteble do
+    member do
+      post :vote_up, :vote_down
+      delete :recall
+    end
+  end
+
+  resources :questions, concerns: :voteble do
+    resources :answers, concerns: :voteble, shallow: true, only: %i[ new create destroy update] do
       patch :best, on: :member
     end
   end
