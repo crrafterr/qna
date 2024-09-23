@@ -41,4 +41,5 @@ RSpec.describe Answer, type: :model do
   end
 
   it_behaves_like Voteble
+  it_behaves_like Commenteble
 end

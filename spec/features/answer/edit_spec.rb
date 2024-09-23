@@ -16,7 +16,7 @@ feature 'User can edit his answer' do
     sign_in(user)
     visit question_path(question)
 
-    within '.answers' do
+    within ".answer-#{answer.id}" do
       expect(page).to_not have_link 'Edit answer'
     end
   end
@@ -29,18 +29,18 @@ feature 'User can edit his answer' do
     end
 
     scenario 'edits his answer', js: true do
-      within '.answers' do
+      within ".answer-#{answer.id}" do
         fill_in 'Your answer', with: 'edited answer'
         click_on 'Save'
 
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'edited answer'
-        expect(page).to_not have_selector 'textarea'
+        expect(page).to_not have_selector('textarea', id: 'answer_body')
       end
     end
 
     scenario 'edits his answer with attach files', js: true do
-      within '.answers' do
+      within ".answer-#{answer.id}" do
         fill_in 'Your answer', with: 'edited answer'
         attach_file 'Answers files', [ "#{Rails.root.join('spec/rails_helper.rb')}", "#{Rails.root.join('spec/spec_helper.rb')}" ]
         click_on 'Save'
@@ -52,7 +52,7 @@ feature 'User can edit his answer' do
     end
 
     scenario 'edits his answer with errors', js: true do
-      within ".answers" do
+      within ".answer-#{answer.id}" do
         fill_in 'Your answer', with: ''
         click_on 'Save'
 
@@ -65,7 +65,7 @@ feature 'User can edit his answer' do
     end
 
     scenario 'edits his answer with link', js: true do
-      within '.answers' do
+      within ".answer-#{answer.id}" do
         click_on 'add link'
 
         fill_in 'Link name', with: 'Test'

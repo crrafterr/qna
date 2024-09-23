@@ -41,6 +41,9 @@ gem "sass-rails"
 gem "aws-sdk"
 gem "cocoon"
 gem "octokit"
+gem "coffee-rails"
+gem "skim"
+gem "gon"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

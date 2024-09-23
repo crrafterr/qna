@@ -35,6 +35,10 @@
                 remote: true,
                 method: :patch,
                 data: { answer_id: answer.id }
+    .comments
+      p Comments:
+      p 
+        = render  'comments/comments', resource: answer
     
     = form_with model: answer,
                 class: 'hidden',
