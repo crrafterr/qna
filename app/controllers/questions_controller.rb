@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   include Commented
 
   before_action :authenticate_user!, except: [ :index, :show ]
-  before_action :gon_vars, only: [ :show, :create ]
+  before_action :gon_question_id, only: [ :show, :create ]
   after_action :publish_question, only: :create
 
   def index
@@ -67,8 +67,7 @@ class QuestionsController < ApplicationController
     ActionCable.server.broadcast("questions", question.to_json)
   end
 
-  def gon_vars
-    gon.current_user = current_user
+  def gon_question_id
     gon.question_id = question.id
   end
 end

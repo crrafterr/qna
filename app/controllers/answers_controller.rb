@@ -64,16 +64,10 @@ class AnswersController < ApplicationController
     ActionCable.server.broadcast(
       "question_#{@answer.question_id}_answers", {
         answer: @answer,
-        files: files,
+        files: @answer.files_info,
         links: @answer.links,
         total_votes: @answer.total_votes
       }.to_json
     )
   end
-end
-
-def files
-  @answer.files.map { |f| { id: f.id,
-                            name: f.filename.to_s,
-                            url: url_for(f) } }
 end
