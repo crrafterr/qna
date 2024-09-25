@@ -1,7 +1,10 @@
 class AnswersController < ApplicationController
   include Voted
+  include Commented
 
   before_action :authenticate_user!
+
+  after_action :publish_answer, only: :create
 
   def create
     @answer = question.answers.create(answer_params)
@@ -53,5 +56,18 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body, files: [], links_attributes: [ :name, :url ])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast(
+      "question_#{@answer.question_id}_answers", {
+        answer: @answer,
+        files: @answer.files_info,
+        links: @answer.links,
+        total_votes: @answer.total_votes
+      }.to_json
+    )
   end
 end

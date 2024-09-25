@@ -1,7 +1,10 @@
 class QuestionsController < ApplicationController
   include Voted
+  include Commented
 
   before_action :authenticate_user!, except: [ :index, :show ]
+  before_action :gon_question_id, only: [ :show, :create ]
+  after_action :publish_question, only: :create
 
   def index
     @questions = Question.all
@@ -56,5 +59,15 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body, files: [], links_attributes: [ :name, :url ], badge_attributes: [ :title, :image ])
+  end
+
+  def publish_question
+    return if @question.errors.any?
+
+    ActionCable.server.broadcast("questions", question.to_json)
+  end
+
+  def gon_question_id
+    gon.question_id = question.id
   end
 end

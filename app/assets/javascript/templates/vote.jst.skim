@@ -1,0 +1,3 @@
+p Votes:
+.total-votes
+  = "#{@total_votes}"

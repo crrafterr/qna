@@ -22,8 +22,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions, concerns: :voteble do
-    resources :answers, concerns: :voteble, shallow: true, only: %i[ new create destroy update] do
+  concern :commenteble do
+    post :create_comment, on: :member
+  end
+
+  resources :questions, concerns: %i[voteble commenteble] do
+    resources :answers, concerns: %i[voteble commenteble], shallow: true, only: %i[ new create destroy update] do
       patch :best, on: :member
     end
   end
@@ -31,4 +35,6 @@ Rails.application.routes.draw do
   resources :attachments, only: :destroy
   resources :links, only: :destroy
   resources :badges, only: :index
+
+  mount ActionCable.server => "/cable"
 end
