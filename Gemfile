@@ -44,6 +44,10 @@ gem "octokit"
 gem "coffee-rails"
 gem "skim"
 gem "gon"
+gem "omniauth"
+gem "omniauth-github"
+gem "omniauth-rails_csrf_protection"
+gem "omniauth-vkontakte"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -57,6 +61,8 @@ group :development, :test do
 
   gem "rspec-rails"
   gem "factory_bot_rails"
+  gem "capybara-email"
+  gem "letter_opener"
 end
 
 group :development do

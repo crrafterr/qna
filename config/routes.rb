@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: "oauth_callbacks" }
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   root to: "questions#index"
+
+  devise_scope :user do
+    post "/send_email" => "oauth_callbacks#send_email"
+  end
 
   concern :voteble do
     member do
