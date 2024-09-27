@@ -5,8 +5,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
 
   describe 'github' do
     before do
-      @request.env["devise.mapping"] = Devise.mappings[:user]
-      @request.env['omniauth.auth'] = mock_auth :github, email: user.email
+      omniauth_env 'githab', email: user.email
     end
 
     let!(:oauth_data) do
@@ -60,8 +59,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
 
   describe 'vkontakte' do
     before do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
-      @request.env['omniauth.auth'] = mock_auth :vkontakte
+      omniauth_env 'vkontakte'
     end
 
     context 'user exists' do

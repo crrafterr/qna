@@ -1,13 +1,11 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
-  before_action :auth, :email, only: %i[github vkontakte]
+  before_action :auth, :email, :email_confirmation, only: %i[github vkontakte]
 
   def github
-    return render "shared/email" unless @email
     sing_in_by_oauth(auth, email)
   end
 
   def vkontakte
-    return render "shared/email" unless @email
     sing_in_by_oauth(auth, email)
   end
 
@@ -44,5 +42,9 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
     else
       redirect_to user_session_path, notice: "We send you email on #{user.email} for confirmation"
     end
+  end
+
+  def email_confirmation
+    render "shared/email" unless @email
   end
 end
