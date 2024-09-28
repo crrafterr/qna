@@ -6,6 +6,8 @@ class AnswersController < ApplicationController
 
   after_action :publish_answer, only: :create
 
+  authorize_resource
+
   def create
     @answer = question.answers.create(answer_params)
     @answer.user = current_user
@@ -13,24 +15,14 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user.author?(answer)
-      answer.destroy
-      flash[:notice] = "Answer successfully deleted."
-    else
-      flash[:notice] = "Only author can delete answer."
-      redirect_to answer.question
-    end
-
+    answer.destroy
+    flash[:notice] = "Answer successfully deleted."
     redirect_to @answer.question
   end
 
   def update
-    if current_user.author?(answer)
-      answer.update(answer_params)
-      @question = @answer.question
-    else
-      redirect_to answer.question
-    end
+    answer.update(answer_params)
+    @question = @answer.question
   end
 
   def best
