@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
+  let(:second_user) { create(:user) }
   let(:question) { create(:question, user: user) }
   let!(:badge) { create(:badge, question: question) }
   let(:answer) { create(:answer, question: question, user: user) }
+  let(:second_answer) { create(:answer, question: question, user: second_user) }
 
   before { login(user) }
 
@@ -68,12 +70,12 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'best answer' do
       it 'set best and add badge to user' do
-        patch :best, params: { id: answer }, format: :js
-        answer.reload
+        patch :best, params: { id: second_answer }, format: :js
+        second_answer.reload
         badge.reload
 
-        expect(answer.best).to eq true
-        expect(answer.user).to eq badge.user
+        expect(second_answer.best).to eq true
+        expect(second_answer.user).to eq badge.user
       end
     end
   end
