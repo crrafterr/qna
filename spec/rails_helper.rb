@@ -47,6 +47,7 @@ RSpec.configure do |config|
   Capybara.javascript_driver = :selenium_chrome_headless
   config.include OmniauthHelpers
   config.include OmniauthEnvHelpers
+  config.include ApiHelpers, type: :request
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [
