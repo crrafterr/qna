@@ -106,10 +106,19 @@ RSpec.describe User, type: :model do
 
   describe '#subscribe?' do
     let(:user) { create(:user) }
+    let(:second_user) { create(:user) }
     let(:question) { create(:question, user: user) }
 
-    it 'Is the user the ubscribe?' do
-      expect(user.subscribe?(question)).to eq true
+    context 'when user has subscription' do
+      it 'returns true' do
+        expect(user.subscribe?(question)).to eq true
+      end
+    end
+
+    context 'when user has not subscription' do
+      it 'returns false' do
+        expect(second_user.subscribe?(question)).to eq false
+      end
     end
   end
 end
