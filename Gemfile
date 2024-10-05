@@ -55,6 +55,9 @@ gem "oj"
 gem "sidekiq", "= 6.5.12"
 gem "sinatra", require: false
 gem "whenever", require: false
+gem "mysql2"
+gem "thinking-sphinx"
+gem "database_cleaner"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

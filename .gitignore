@@ -41,4 +41,8 @@
 /.env
 
 # Ignore .credentials.yml.enc
-/config/credentials.yml.enc
+config/credentials.yml.enc
+
+config/*.sphinx.conf
+db/sphinx
+dump.rdb
