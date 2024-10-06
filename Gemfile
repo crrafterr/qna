@@ -58,6 +58,7 @@ gem "whenever", require: false
 gem "mysql2"
 gem "thinking-sphinx"
 gem "database_cleaner"
+gem "net-pop", github: "ruby/net-pop"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -78,6 +79,14 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+
+  gem "capistrano", require: false
+  gem "capistrano-bundler", require: false
+  gem "capistrano-rails", require: false
+  gem "capistrano-rvm", require: false
+  gem "capistrano-passenger", require: false
+  gem "ed25519", ">= 1.2", "< 2.0"
+  gem "bcrypt_pbkdf", ">= 1.0", "< 2.0"
 end
 
 group :test do
