@@ -5,7 +5,7 @@
   .total-votes
       = "#{resource.total_votes}"
 
-  .voting class = "#{'hidden' if current_user&.voted?(resource)}"
+  .voting class = "#{'hidden' if current_user&.author?(resource)}"
     - if can?(:vote_up, resource)
       = link_to '+', polymorphic_path(resource, action: :vote_up),
                      method: :post,
@@ -17,7 +17,8 @@
                      method: :post,
                      remote: true,
                      data: { type: :json }
-  .recall
+  
+  .recall class = "#{'hidden' if current_user&.author?(resource)}"
     = link_to 'recall', polymorphic_path(resource, action: :recall),
                           class: "recall-link #{'hidden' unless can?(:recall, resource)}",
                           method: :delete,
