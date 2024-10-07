@@ -58,6 +58,7 @@ gem "whenever", require: false
 gem "mysql2"
 gem "thinking-sphinx"
 gem "database_cleaner"
+gem "mini_racer"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
