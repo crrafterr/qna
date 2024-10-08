@@ -59,6 +59,7 @@ gem "mysql2"
 gem "thinking-sphinx"
 gem "database_cleaner"
 gem "mini_racer"
+gem "unicorn"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -88,6 +89,7 @@ group :development do
   gem "ed25519", ">= 1.2", "< 2.0"
   gem "bcrypt_pbkdf", ">= 1.0", "< 2.0"
   gem "capistrano-sidekiq", require: false
+  gem "capistrano3-unicorn", require: false
 end
 
 group :test do
